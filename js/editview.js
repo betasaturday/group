@@ -1,16 +1,11 @@
 function EditView (viewContainer, controller, group) {
     'use strict';
 	
-	var tableEditTemplate = '<div class = "table"><%table body%></div>',
-		labelInputTemplate = '<div class = "row">' +
-								'<div class = "cell"><label><%name%>: </label></div>' +
-								'<div class = "cell"><input type="text" value = "<%value%>"></div>' +
-							'</div>',
-		backToListHTML = '<button value="back-to-list">Back to list</button>',
-		previewButtonHtml = '<button value="preview">Preview</button>', 
-		backToListButton,
-		previewButton,
-		currentPerson;
+		var backToListHTML = '<button value="back-to-list">Back to list</button>',
+			previewButtonHtml = '<button value="preview">Preview</button>',
+			backToListButton,
+			previewButton,
+			currentPerson;
 	
     this.render = function (person) {
 		var viewContainerHTML = '',
@@ -19,18 +14,20 @@ function EditView (viewContainer, controller, group) {
 		currentPerson = person;
 		
 		Object.keys(personAttributes).forEach(function (attributeName) {
-			viewContainerHTML += 
-				templator.replace(labelInputTemplate, {
+			viewContainerHTML += labelInputTemplate({
 				'name': attributeName,
 				'value': personAttributes[attributeName]
 			});
 		});
 		
-		viewContainerHTML = templator.replace(tableEditTemplate, {
-			'table body': viewContainerHTML
+		viewContainerHTML = tableEditTemplate({
+			'table_body': viewContainerHTML
 		});
 		viewContainerHTML += backToListHTML;
+		viewContainerHTML += previewButtonHtml;
 		viewContainer.innerHTML = viewContainerHTML;
+		backToListButton = viewContainer.querySelector('[value="back-to-list"]');
+		previewButton = viewContainer.querySelector('[value="preview"]');
 		this.show();
     };
 	

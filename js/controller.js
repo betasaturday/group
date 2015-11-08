@@ -20,7 +20,7 @@ function Controller() {
 	};
 
 	mediator.subscribe('preview', this.showPreview);
-	mediator.subscribe('editView', this.showEditView);
+	mediator.subscribe('editView', this.showEdit);
 	mediator.subscribe('list', this.showList);
 
 	currentView = listView;

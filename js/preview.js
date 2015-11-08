@@ -1,7 +1,6 @@
 function Preview (viewContainer, controller, group) {
     'use strict';
-	var nameValueTemplate = '<div class = "line"><%name%>: <%value%></div>',
-		backToListHTML = '<button value="back-to-list">Back to list</button>',
+	var	backToListHTML = '<button value="back-to-list">Back to list</button>',
 		editButtonHTML = '<button value="edit">Edit</button>',
 		backToListButton,
 		editButton,
@@ -10,16 +9,18 @@ function Preview (viewContainer, controller, group) {
 	this.render = function (person) {
 		var previewHTML = '',
 			personAttributes = person.getAttributes();
+
+		currentPerson = person;
 		
 		Object.keys(personAttributes).forEach(function (attributeName) {
-			previewHTML += 
-				templator.replace(nameValueTemplate, {
+			previewHTML += nameValueTemplate({
 					'name': attributeName,
 					'value': personAttributes[attributeName]
 				});
 		});
 		
 		previewHTML += backToListHTML;
+		previewHTML += editButtonHTML;
 		viewContainer.innerHTML = previewHTML;
 
 		backToListButton = viewContainer.querySelector('[value="back-to-list"]');
@@ -46,6 +47,6 @@ function Preview (viewContainer, controller, group) {
 	}
 
 	function showEdit() {
-		mediator.publish('edit', currentPerson);
+		mediator.publish('editView', currentPerson);
 	}
 }

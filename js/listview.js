@@ -1,12 +1,9 @@
 function ListView(viewContainer, controller, group) {
 	'use strict';
-	var groupTableTemplate = '<div class = "caption"><%group name%></div>' +
-								'<div class = "table"></div>',
-		self = this;
 	
 	this.render = function () {
-		var groupTableHTML =  templator.replace(groupTableTemplate, {
-			'group name': group.getName(),
+		var groupTableHTML =  groupTableTemplate({
+			'group_name': group.getName(),
 		}), 
 		groupTable,
 		personView;
