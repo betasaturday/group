@@ -13,8 +13,30 @@ var helper = (function () {
 		return el;
 	}
 
+	function makeAjaxRequest() {
+		var xhr;
+		if (XMLHttpRequest) {
+			xhr = new XMLHttpRequest();
+		} else {
+			xhr = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		return xhr;
+	}
+
+	function sendAjaxRequest(method, uri, callback) {
+		var xhr = makeAjaxRequest();
+		xhr.open(method, uri, true);
+		xhr.addEventListener('readystatechange', function () {
+			if (xhr.readyState === 4 && xhr.status === 200) {
+				callback(xhr.responseText);
+			}
+		}, false);
+		xhr.send(null);
+	}
+
 	return {
 		'getEl': getEl,
-		'createEl': createEl
+		'createEl': createEl,
+		'sendAjaxRequest': sendAjaxRequest
 	};
 }());

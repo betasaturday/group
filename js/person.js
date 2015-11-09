@@ -15,4 +15,8 @@ function Person (name, lastname, gender, age, skype) {
 	this.update = function (newAttributes) {
 		attributes = newAttributes;
 	};
+
+	this.init = function(personArguments) {
+		this.constructor.apply(this, personArguments);
+	};
 };

@@ -1,16 +1,9 @@
 function Group() {
 	'use strict';
-	var members = [
-			new Person('Dsdjfkd', 'Sdjfk', 'M', 43, 'dfjksdjf'),
-			new Person('Axcnvt', 'Rjsdkfjd', 'M', 19, 'xcvxcvx'),
-			new Person('Tsdfjkdsf', 'Qkdsjf', 'F', 34, 'uwerwere'),
-			new Person('Gkdsfjkdlsf', 'Idfjkdsf', 'M', 27, 'cvxcv'),
-			new Person('Esdjk', 'Vfdsdfpp', 'M', 23, 'opwe'),
-			new Person('Rsdjfk', 'Cdfs', 'M', 18, 'xcvjk'),
-			new Person('Bskdfjdks', 'Udfdj', 'F', 31, 'cnsdosd'),
-			new Person('Udsfj', 'Qcvnxc', 'M', 28, 'evjkj')
-		],
-		name = 'Group name';
+	var groupJson = helper.sendAjaxRequest('GET', '/students', init),
+		members,
+		name;
+
 
 	this.getMembers = function () {
 		return members.slice();
@@ -33,4 +26,16 @@ function Group() {
 			callback(member);
 		});
 	};
+
+	function init(groupJson) {
+		var sourceObject = JSON.parse(groupJson);
+
+		members = sourceObject.members.map(function (personArguments) {
+			var person = new Person();
+			person.init(personArguments);
+			return person;
+		});
+		name = sourceObject.name;
+		mediator.publish('group-created');
+	}
 }

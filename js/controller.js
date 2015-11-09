@@ -1,9 +1,9 @@
 function Controller() {
 	'use strict';
-	var group = new Group(),
-		listView = new ListView(helper.getEl('list-view'), this, group),
-		editView = new EditView(helper.getEl('edit-view'), this, group),
-		preView = new Preview(helper.getEl('preview'), this, group),
+	var group,
+		listView,
+		editView,
+		preView,
 		currentView;
 
 	this.showList = function () {
@@ -19,12 +19,19 @@ function Controller() {
 		preView.render(person);
 	};
 
+	this.initViews = function() {
+		listView = new ListView(helper.getEl('list-view'), group);
+		editView = new EditView(helper.getEl('edit-view'));
+		preView = new Preview(helper.getEl('preview'));
+		currentView = listView;
+		this.showList();
+	};
+
 	mediator.subscribe('preview', this.showPreview);
 	mediator.subscribe('editView', this.showEdit);
 	mediator.subscribe('list', this.showList);
-
-	currentView = listView;
-	this.showList();
+	mediator.subscribe('group-created', this.initViews.bind(this));
+	group = new Group();
 
 	function updateCurrentView(newCurrentView) {
 		currentView.hide();

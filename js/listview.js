@@ -1,4 +1,4 @@
-function ListView(viewContainer, controller, group) {
+function ListView(viewContainer, group) {
 	'use strict';
 	
 	this.render = function () {

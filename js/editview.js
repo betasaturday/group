@@ -1,4 +1,4 @@
-function EditView (viewContainer, controller, group) {
+function EditView (viewContainer) {
     'use strict';
 	
 		var backToListHTML = '<button value="back-to-list">Back to list</button>',

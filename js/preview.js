@@ -1,4 +1,4 @@
-function Preview (viewContainer, controller, group) {
+function Preview (viewContainer) {
     'use strict';
 	var	backToListHTML = '<button value="back-to-list">Back to list</button>',
 		editButtonHTML = '<button value="edit">Edit</button>',
