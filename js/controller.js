@@ -8,7 +8,7 @@ function Controller() {
 
 	this.showList = function () {
 		updateCurrentView(listView);
-		listView.render();
+		listView.show();
 	};
 	this.showEdit = function (person) {
 		updateCurrentView(editView);
@@ -24,7 +24,7 @@ function Controller() {
 		editView = new EditView(helper.getEl('edit-view'));
 		preView = new Preview(helper.getEl('preview'));
 		currentView = listView;
-		this.showList();
+		listView.render();
 	};
 
 	mediator.subscribe('preview', this.showPreview);

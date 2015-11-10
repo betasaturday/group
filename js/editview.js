@@ -2,9 +2,11 @@ function EditView (viewContainer) {
     'use strict';
 	
 		var backToListHTML = '<button value="back-to-list">Back to list</button>',
+			saveButtonHtml = '<button value="save">Save</button>',
 			previewButtonHtml = '<button value="preview">Preview</button>',
 			backToListButton,
 			previewButton,
+			saveButton,
 			currentPerson;
 	
     this.render = function (person) {
@@ -23,11 +25,13 @@ function EditView (viewContainer) {
 		viewContainerHTML = tableEditTemplate({
 			'table_body': viewContainerHTML
 		});
+		viewContainerHTML += saveButtonHtml;
 		viewContainerHTML += backToListHTML;
 		viewContainerHTML += previewButtonHtml;
 		viewContainer.innerHTML = viewContainerHTML;
 		backToListButton = viewContainer.querySelector('[value="back-to-list"]');
 		previewButton = viewContainer.querySelector('[value="preview"]');
+		saveButton = viewContainer.querySelector('[value="save"]');
 		this.show();
     };
 	
@@ -35,22 +39,29 @@ function EditView (viewContainer) {
 		viewContainer.classList.remove('hidden');	
 		previewButton.addEventListener('click', showPreview, false);
 		backToListButton.addEventListener('click', showList, false);
+		saveButton.addEventListener('click', save, false);
 	};
 	
 	this.hide = function () {
 		viewContainer.classList.add('hidden');
 		previewButton.removeEventListener('click', showPreview, false);
 		backToListButton.removeEventListener('click', showList, false);
+		saveButton.removeEventListener('click', save, false);
 	};
 	
 	function showPreview() {
-		currentPerson.update(getFieldsData());
 		mediator.publish('preview', currentPerson);
 	}
 
 	function showList() {
-		currentPerson.update(getFieldsData());
+		mediator.publish('person-edited');
+		mediator.unsubscribeAll('person-edited');
 		mediator.publish('list');
+	}
+
+	function save() {
+		currentPerson.update(getFieldsData());
+		alert("Saved successfully");
 	}
 
 	function getFieldsData() {

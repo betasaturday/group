@@ -1,10 +1,24 @@
 function PersonView(person) {
 	'use strict';
-
+	var row;
 
 	this.render = function () {
-		var row = helper.createEl('div', {'class': 'row'}),
-			personAttributes = person.getAttributes(),
+		row = helper.createEl('div', {'class': 'row'}),
+		updateRow();
+		return row;
+	};
+
+	function showPreview() {
+		mediator.publish('preview', person);
+	}
+
+	function showEditView() {
+		mediator.publish('editView', person);
+		mediator.subscribe('person-edited', updateRow);
+	}
+
+	function updateRow() {
+		var	personAttributes = person.getAttributes(),
 			previewButton,
 			editButton;
 
@@ -18,14 +32,5 @@ function PersonView(person) {
 		previewButton.addEventListener('click', showPreview, false);
 		editButton.addEventListener('click', showEditView, false);
 
-		return row;
-	};
-
-	function showPreview() {
-		mediator.publish('preview', person);
-	}
-
-	function showEditView() {
-		mediator.publish('editView', person);
 	}
 }

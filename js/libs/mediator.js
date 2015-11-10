@@ -17,9 +17,16 @@ var mediator = (function() {
 		}
 	}
 
+	function unsubscribeAll(channel) {
+		if (channel in handlersMap) {
+			handlersMap[channel] = [];
+		}
+	}
+
 	return {
 		'subscribe': subscribe,
-		'publish': publish
+		'publish': publish,
+		'unsubscribeAll': unsubscribeAll
 	};
 
 }());
