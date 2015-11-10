@@ -43,6 +43,7 @@ function Preview (viewContainer) {
 	};
 	
 	function showList() {
+		mediator.unsubscribeAll('person-edited');
 		mediator.publish('list');
 	}
 

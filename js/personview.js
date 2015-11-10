@@ -10,6 +10,7 @@ function PersonView(person) {
 
 	function showPreview() {
 		mediator.publish('preview', person);
+		mediator.subscribe('person-edited', updateRow);
 	}
 
 	function showEditView() {
