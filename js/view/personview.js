@@ -9,13 +9,13 @@ function PersonView(person) {
 	};
 
 	function showPreview() {
-		mediator.publish('preview', person);
-		mediator.subscribe('person-edited', updateRow);
+		mediator.publish('preview:showed', person);
+		mediator.subscribe('person:updated', updateRow);
 	}
 
 	function showEditView() {
-		mediator.publish('editView', person);
-		mediator.subscribe('person-edited', updateRow);
+		mediator.publish('editView:showed', person);
+		mediator.subscribe('person:updated', updateRow);
 	}
 
 	function updateRow() {

@@ -6,32 +6,34 @@ function Controller() {
 		preView,
 		currentView;
 
-	this.showList = function () {
+	mediator.subscribe('listView:showed', showList);
+	mediator.subscribe('preview:showed', showPreview);
+	mediator.subscribe('editView:showed', showEdit);
+	mediator.subscribe('group:created', initViews);
+	group = new Group();
+
+	function showList() {
 		updateCurrentView(listView);
 		listView.show();
-	};
-	this.showEdit = function (person) {
+	}
+
+	function showEdit(person) {
 		updateCurrentView(editView);
 		editView.render(person);
-	};
-	this.showPreview = function (person) {
+	}
+
+	function showPreview(person) {
 		updateCurrentView(preView);
 		preView.render(person);
-	};
+	}
 
-	this.initViews = function() {
+	function initViews() {
 		listView = new ListView(helper.getEl('list-view'), group);
 		editView = new EditView(helper.getEl('edit-view'));
 		preView = new Preview(helper.getEl('preview'));
 		currentView = listView;
 		listView.render();
 	};
-
-	mediator.subscribe('preview', this.showPreview);
-	mediator.subscribe('editView', this.showEdit);
-	mediator.subscribe('list', this.showList);
-	mediator.subscribe('group-created', this.initViews.bind(this));
-	group = new Group();
 
 	function updateCurrentView(newCurrentView) {
 		currentView.hide();

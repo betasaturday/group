@@ -36,6 +36,6 @@ function Group() {
 			return person;
 		});
 		name = sourceObject.name;
-		mediator.publish('group-created');
+		mediator.publish('group:created');
 	}
 }

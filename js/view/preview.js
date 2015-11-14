@@ -43,11 +43,11 @@ function Preview (viewContainer) {
 	};
 
 	function showList() {
-		mediator.unsubscribeAll('person-edited');
-		mediator.publish('list');
+		mediator.unsubscribeAll('person:updated');
+		mediator.publish('listView:showed');
 	}
 
 	function showEdit() {
-		mediator.publish('editView', currentPerson);
+		mediator.publish('editView:showed', currentPerson);
 	}
 }

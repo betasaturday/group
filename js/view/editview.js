@@ -50,13 +50,13 @@ function EditView (viewContainer) {
 	};
 
 	function showPreview() {
-		mediator.publish('preview', currentPerson);
+		mediator.publish('preview:showed', currentPerson);
 	}
 
 	function showList() {
-		mediator.publish('person-edited');
-		mediator.unsubscribeAll('person-edited');
-		mediator.publish('list');
+		mediator.publish('person:updated');
+		mediator.unsubscribeAll('person:updated');
+		mediator.publish('listView:showed');
 	}
 
 	function save() {
