@@ -1,6 +1,6 @@
 function EditView (viewContainer) {
     'use strict';
-	
+
 		var backToListHTML = '<button value="back-to-list">Back to list</button>',
 			saveButtonHtml = '<button value="save">Save</button>',
 			previewButtonHtml = '<button value="preview">Preview</button>',
@@ -8,20 +8,20 @@ function EditView (viewContainer) {
 			previewButton,
 			saveButton,
 			currentPerson;
-	
+
     this.render = function (person) {
 		var viewContainerHTML = '',
 			personAttributes = person.getAttributes();
 
 		currentPerson = person;
-		
+
 		Object.keys(personAttributes).forEach(function (attributeName) {
 			viewContainerHTML += labelInputTemplate({
 				'name': attributeName,
 				'value': personAttributes[attributeName]
 			});
 		});
-		
+
 		viewContainerHTML = tableEditTemplate({
 			'table_body': viewContainerHTML
 		});
@@ -34,21 +34,21 @@ function EditView (viewContainer) {
 		saveButton = viewContainer.querySelector('[value="save"]');
 		this.show();
     };
-	
+
 	this.show = function () {
-		viewContainer.classList.remove('hidden');	
+		viewContainer.classList.remove('hidden');
 		previewButton.addEventListener('click', showPreview, false);
 		backToListButton.addEventListener('click', showList, false);
 		saveButton.addEventListener('click', save, false);
 	};
-	
+
 	this.hide = function () {
 		viewContainer.classList.add('hidden');
 		previewButton.removeEventListener('click', showPreview, false);
 		backToListButton.removeEventListener('click', showList, false);
 		saveButton.removeEventListener('click', save, false);
 	};
-	
+
 	function showPreview() {
 		mediator.publish('preview', currentPerson);
 	}
@@ -71,9 +71,9 @@ function EditView (viewContainer) {
 			propertyName = '',
 			propertyValue = '',
 			labelText;
-		
+
 		rows.forEach(function (row) {
-			labelText = row.getElementsByTagName('label')[0].innerHTML;	
+			labelText = row.getElementsByTagName('label')[0].innerHTML;
 			propertyName = labelText.slice(0, -2);
 			propertyValue = row.getElementsByTagName('input')[0].value;
 			result[propertyName] = propertyValue;

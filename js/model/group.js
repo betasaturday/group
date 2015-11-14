@@ -16,7 +16,7 @@ function Group() {
 	this.getPersonAttributesByIndex = function (index) {
 		return members[index].getAttributes();
 	};
-	
+
 	this.updatePerson = function (index, personAttributes) {
 		members[index].update(personAttributes);
 	};

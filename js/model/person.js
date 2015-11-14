@@ -7,11 +7,11 @@ function Person (name, lastname, gender, age, skype) {
 		'age': age,
 		'skype': skype
 	};
-	
+
 	this.getAttributes = function () {
 		return JSON.parse(JSON.stringify(attributes));
 	};
-	
+
 	this.update = function (newAttributes) {
 		attributes = newAttributes;
 	};
