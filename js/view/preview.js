@@ -1,45 +1,24 @@
-function Preview (viewContainer) {
+function Preview () {
     'use strict';
-	var	backToListHTML = '<button value="back-to-list">Back to list</button>',
-		editButtonHTML = '<button value="edit">Edit</button>',
-		backToListButton,
-		editButton,
-		currentPerson;
+	var	$previewElement,
+		$backToListButton,
+		$editButton,
+		person;
 
-	this.render = function (person) {
-		var previewHTML = '',
-			personAttributes = person.getAttributes();
+	this.render = function (_person) {
+		person = _person;
+		$previewElement = $(previewTpl(person.toJSON()));
 
-		currentPerson = person;
-
-		Object.keys(personAttributes).forEach(function (attributeName) {
-			previewHTML += nameValueTemplate({
-					'name': attributeName,
-					'value': personAttributes[attributeName]
-				});
-		});
-
-		previewHTML += backToListHTML;
-		previewHTML += editButtonHTML;
-		viewContainer.innerHTML = previewHTML;
-
-		backToListButton = viewContainer.querySelector('[value="back-to-list"]');
-		editButton = viewContainer.querySelector('[value="edit"]');
+		$backToListButton = $previewElement.find('[value="back-to-list"]').first();
+		$editButton = $previewElement.find('[value="edit"]').first();
 
 		this.show();
+		return $previewElement;
 	};
 
 	this.show = function () {
-		viewContainer.classList.remove('hidden');
-		backToListButton.addEventListener('click', showList, false);
-		editButton.addEventListener('click', showEdit, false);
-	};
-
-	this.hide = function () {
-		viewContainer.classList.add('hidden');
-		backToListButton.removeEventListener('click', showList, false);
-		editButton.removeEventListener('click', showEdit, false);
-
+		$backToListButton.click(showList);
+		$editButton.click(showEdit);
 	};
 
 	function showList() {
@@ -48,6 +27,6 @@ function Preview (viewContainer) {
 	}
 
 	function showEdit() {
-		mediator.publish('editView:showed', currentPerson);
+		mediator.publish('editView:showed', person);
 	}
 }

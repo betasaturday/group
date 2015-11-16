@@ -1,10 +1,6 @@
 var helper = (function () {
 	'use strict';
 
-	function getEl (id) {
-		return document.getElementById(id);
-	}
-
 	function createEl(tagName, attributes) {
 		var el = document.createElement(tagName);
 		Object.keys(attributes).forEach(function (attributeName) {
@@ -35,7 +31,6 @@ var helper = (function () {
 	}
 
 	return {
-		'getEl': getEl,
 		'createEl': createEl,
 		'sendAjaxRequest': sendAjaxRequest
 	};

@@ -8,15 +8,15 @@ function Person (name, lastname, gender, age, skype) {
 		'skype': skype
 	};
 
-	this.getAttributes = function () {
+	this.toJSON = function () {
 		return JSON.parse(JSON.stringify(attributes));
 	};
 
-	this.update = function (newAttributes) {
-		attributes = newAttributes;
+	this.update = function (personJSON) {
+		attributes = personJSON;
 	};
 
-	this.init = function(personArguments) {
-		this.constructor.apply(this, personArguments);
+	this.init = function(personJSON) {
+		this.constructor.apply(this, personJSON);
 	};
 };

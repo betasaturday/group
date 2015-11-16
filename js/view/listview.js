@@ -1,31 +1,28 @@
-function ListView(viewContainer, group) {
+function ListView(group) {
 	'use strict';
+	var $listViewElement;
 
-	this.render = function () {
+	this.init = function () {
 		var groupTableHTML =  groupTableTemplate({
 			'group_name': group.getName(),
 		}),
-		groupTable,
+		$groupTable,
 		personView;
 
-		viewContainer.innerHTML = groupTableHTML;
-		groupTable = viewContainer.getElementsByClassName('table')[0];
+		$listViewElement = $(groupTableHTML);
+		$groupTable = $listViewElement.find('.table').first();
 
 
 		group.each(function (person) {
 			personView = new PersonView(person);
-			groupTable.appendChild(personView.render());
+			$groupTable.append(personView.render());
 		});
 
-		this.show();
+		return $listViewElement;
 	};
 
-	this.show = function () {
-		viewContainer.classList.remove('hidden');
-	};
-
-	this.hide = function () {
-		viewContainer.classList.add('hidden');
+	this.render = function () {
+		return $listViewElement;
 	};
 
 }

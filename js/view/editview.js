@@ -1,81 +1,57 @@
-function EditView (viewContainer) {
+function EditView () {
     'use strict';
+	var $editViewElement,
+		$backToListButton,
+		$previewButton,
+		$saveButton,
+		person;
 
-		var backToListHTML = '<button value="back-to-list">Back to list</button>',
-			saveButtonHtml = '<button value="save">Save</button>',
-			previewButtonHtml = '<button value="preview">Preview</button>',
-			backToListButton,
-			previewButton,
-			saveButton,
-			currentPerson;
+    this.render = function (_person) {
+		person = _person;
 
-    this.render = function (person) {
-		var viewContainerHTML = '',
-			personAttributes = person.getAttributes();
+		$editViewElement = $(editViewTpl(person.toJSON()));
 
-		currentPerson = person;
+		$backToListButton = $editViewElement.find('[value="back-to-list"]').first();
+		$previewButton = $editViewElement.find('[value="preview"]').first();
+		$saveButton = $editViewElement.find('[value="save"]').first();
 
-		Object.keys(personAttributes).forEach(function (attributeName) {
-			viewContainerHTML += labelInputTemplate({
-				'name': attributeName,
-				'value': personAttributes[attributeName]
-			});
-		});
-
-		viewContainerHTML = tableEditTemplate({
-			'table_body': viewContainerHTML
-		});
-		viewContainerHTML += saveButtonHtml;
-		viewContainerHTML += backToListHTML;
-		viewContainerHTML += previewButtonHtml;
-		viewContainer.innerHTML = viewContainerHTML;
-		backToListButton = viewContainer.querySelector('[value="back-to-list"]');
-		previewButton = viewContainer.querySelector('[value="preview"]');
-		saveButton = viewContainer.querySelector('[value="save"]');
 		this.show();
+
+		return $editViewElement;
     };
 
 	this.show = function () {
-		viewContainer.classList.remove('hidden');
-		previewButton.addEventListener('click', showPreview, false);
-		backToListButton.addEventListener('click', showList, false);
-		saveButton.addEventListener('click', save, false);
-	};
-
-	this.hide = function () {
-		viewContainer.classList.add('hidden');
-		previewButton.removeEventListener('click', showPreview, false);
-		backToListButton.removeEventListener('click', showList, false);
-		saveButton.removeEventListener('click', save, false);
+		$previewButton.click(showPreview);
+		$backToListButton.click(showList);
+		$saveButton.click(save);
 	};
 
 	function showPreview() {
-		mediator.publish('preview:showed', currentPerson);
+		mediator.publish('preview:showed', person);
 	}
 
 	function showList() {
-		mediator.publish('person:updated');
 		mediator.unsubscribeAll('person:updated');
 		mediator.publish('listView:showed');
 	}
 
 	function save() {
-		currentPerson.update(getFieldsData());
+		person.update(getFieldsData());
+		mediator.publish('person:updated');
 		alert("Saved successfully");
 	}
 
 	function getFieldsData() {
-		var rowsNodeList = viewContainer.getElementsByClassName('row'),
-			rows = [].slice.call(rowsNodeList),
+		var $rows = $editViewElement.find('.row').toArray(),
 			result = {},
 			propertyName = '',
 			propertyValue = '',
 			labelText;
 
-		rows.forEach(function (row) {
-			labelText = row.getElementsByTagName('label')[0].innerHTML;
+		$rows.forEach(function (row) {
+			labelText = $(row).find('label').first().html();
 			propertyName = labelText.slice(0, -2);
-			propertyValue = row.getElementsByTagName('input')[0].value;
+			propertyValue = $(row).find('input').first().val();
 			result[propertyName] = propertyValue;
 		});
 		return result;
