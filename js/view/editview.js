@@ -15,12 +15,10 @@ function EditView () {
 		$previewButton = $editViewElement.find('[value="preview"]').first();
 		$saveButton = $editViewElement.find('[value="save"]').first();
 
-		this.show();
-
 		return $editViewElement;
     };
 
-	this.show = function () {
+	this.addEventListeners = function () {
 		$previewButton.click(showPreview);
 		$backToListButton.click(showList);
 		$saveButton.click(save);

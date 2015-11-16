@@ -1,11 +1,19 @@
 function PersonView(person) {
 	'use strict';
-	var $row;
+	var $row,
+		previewButton,
+		editButton;
+
 
 	this.render = function () {
 		$row = $('<div class="row"></div>'),
 		updateRow();
 		return $row;
+	};
+
+	this.addEventListeners = function () {
+		$row.on('click', '[value="preview"]', showPreview);
+		$row.on('click', '[value="edit"]', showEditView);
 	};
 
 	function showPreview() {
@@ -19,9 +27,7 @@ function PersonView(person) {
 	}
 
 	function updateRow() {
-		var	personAttributes = person.toJSON(),
-			previewButton,
-			editButton;
+		var	personAttributes = person.toJSON();
 
 		$row.html(tableRowTemplate({
 			'name': personAttributes.name,
@@ -29,9 +35,5 @@ function PersonView(person) {
 		}));
 		previewButton = $row.find('[value="preview"]').first();
 		editButton = $row.find('[value="edit"]').first();
-
-		previewButton.click(showPreview);
-		editButton.click(showEditView);
-
 	}
 }

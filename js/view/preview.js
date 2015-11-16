@@ -12,11 +12,10 @@ function Preview () {
 		$backToListButton = $previewElement.find('[value="back-to-list"]').first();
 		$editButton = $previewElement.find('[value="edit"]').first();
 
-		this.show();
 		return $previewElement;
 	};
 
-	this.show = function () {
+	this.addEventListeners = function () {
 		$backToListButton.click(showList);
 		$editButton.click(showEdit);
 	};

@@ -5,6 +5,7 @@ function Controller() {
 		editView,
 		preView,
 		currentView,
+		$listViewElement,
 		$displayedViewElement;
 
 	mediator.subscribe('listView:showed', showList);
@@ -14,29 +15,41 @@ function Controller() {
 	group = new Group();
 
 	function showList() {
-		changeDisplayedView(listView.render());
+		$listViewElement.show();
+		$displayedViewElement.hide();
 	}
 
 	function showEdit(person) {
-		changeDisplayedView(editView.render(person));
+		changeDisplayedView(editView.render(person), editView);
 	}
 
 	function showPreview(person) {
-		changeDisplayedView(preView.render(person));
+		changeDisplayedView(preView.render(person), preView);
 	}
 
 	function initViews() {
+		var _listViewContainer;
 		listView = new ListView(group);
 		editView = new EditView();
 		preView = new Preview();
+
+		$listViewElement = $('#list-view');
+		_listViewContainer = listView.getContainer();
+		$listViewElement.replaceWith(_listViewContainer);
+		$listViewElement = _listViewContainer;
 
 		listView.init();
 		$displayedViewElement = $('#view');
 		showList();
 	};
 
-	function changeDisplayedView(viewElement) {
+	function changeDisplayedView(viewElement, view) {
+		$listViewElement.hide();
 		$displayedViewElement.replaceWith($(viewElement));
 		$displayedViewElement = $(viewElement);
+		if (view) {
+			view.addEventListeners();
+		}
+		$displayedViewElement.show();
 	}
 }
