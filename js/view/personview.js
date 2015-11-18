@@ -1,39 +1,23 @@
-function PersonView(person) {
-	'use strict';
-	var $row,
-		previewButton,
-		editButton;
-
-
-	this.render = function () {
-		$row = $('<div class="row"></div>'),
-		updateRow();
-		return $row;
-	};
-
-	this.addEventListeners = function () {
-		$row.on('click', '[value="preview"]', showPreview);
-		$row.on('click', '[value="edit"]', showEditView);
-	};
-
-	function showPreview() {
-		mediator.publish('preview:showed', person);
-		mediator.subscribe('person:updated', updateRow);
+var PersonView = Backbone.View.extend({
+	tagName: 'div',
+	className: 'row',
+	tpl: personRowTemplate,
+	events: {
+		'click [value="preview"]':	'showPreview',
+		'click [value="edit"]': 'showEditView'
+	},
+	initialize: function () {
+		this.model.on('change', this.render, this);
+	},
+	render: function () {
+		this.$el.html(this.tpl(this.model.toJSON()));
+		return this;
+	},
+	showPreview: function () {
+		mediator.publish('show preview', this.model);
+	},
+	showEditView: function () {
+		mediator.publish('show edit-view', this.model);
 	}
+});
 
-	function showEditView() {
-		mediator.publish('editView:showed', person);
-		mediator.subscribe('person:updated', updateRow);
-	}
-
-	function updateRow() {
-		var	personAttributes = person.toJSON();
-
-		$row.html(tableRowTemplate({
-			'name': personAttributes.name,
-			'lastname': personAttributes.lastname
-		}));
-		previewButton = $row.find('[value="preview"]').first();
-		editButton = $row.find('[value="edit"]').first();
-	}
-}

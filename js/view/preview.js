@@ -1,31 +1,32 @@
-function Preview () {
-    'use strict';
-	var	$previewElement,
-		$backToListButton,
-		$editButton,
-		person;
-
-	this.render = function (_person) {
-		person = _person;
-		$previewElement = $(previewTpl(person.toJSON()));
-
-		$backToListButton = $previewElement.find('[value="back-to-list"]').first();
-		$editButton = $previewElement.find('[value="edit"]').first();
-
-		return $previewElement;
-	};
-
-	this.addEventListeners = function () {
-		$backToListButton.click(showList);
-		$editButton.click(showEdit);
-	};
-
-	function showList() {
-		mediator.unsubscribeAll('person:updated');
-		mediator.publish('listView:showed');
+var Preview = Backbone.View.extend({
+	defaults: {
+		el: '#preview'
+	},
+	events: {
+		'click [value="back-to-list"]': 'backToList',
+		'click [value="edit"]': 'edit'
+	},
+	tpl: previewTpl,
+	initialize: function () {
+		this.render();
+	},
+	render: function () {
+		this.$el.html(this.tpl(this.model.toJSON()));
+		this.$el.show();
+		return this;
+	},
+	backToList: function () {
+		this.close();
+		mediator.publish('show group');
+	},
+	edit: function () {
+		this.close();
+		mediator.publish('show edit-view', this.model);
+	},
+	close: function () {
+		this.$el.hide();
+		this.undelegateEvents();
 	}
 
-	function showEdit() {
-		mediator.publish('editView:showed', person);
-	}
-}
+});
+
