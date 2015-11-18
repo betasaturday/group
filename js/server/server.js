@@ -18,18 +18,35 @@ http.createServer(function (request, response) {
 	}
 	else if (lookup === '/students') {
 		response.writeHead(200, {'Content-type': 'text/plain'});
-		var students = {"members": [
-				['Dsdjfkd', 'Sdjfk', 'M', 43, 'dfjksdjf'],
-				['Axcnvt', 'Rjsdkfjd', 'M', 19, 'xcvxcvx'],
-				['Tsdfjkdsf', 'Qkdsjf', 'F', 34, 'uwerwere'],
-				['Gkdsfjkdlsf', 'Idfjkdsf', 'M', 27, 'cvxcv'],
-				['Esdjk', 'Vfdsdfpp', 'M', 23, 'opwe'],
-				['Rsdjfk', 'Cdfs', 'M', 18, 'xcvjk'],
-				['Bskdfjdks', 'Udfdj', 'F', 31, 'cnsdosd'],
-				['Udsfj', 'Qcvnxc', 'M', 28, 'evjkj']
-			],
-			"name": "Group name"
-		};
+		var students = [{
+			name: 'Rjkfg',
+			lastname: 'Qrekre',
+			age: 45,
+			gender: 'M',
+			skype: 'djkfj'
+		},
+		{
+			name: 'Were',
+			lastname: 'Tthjfhj',
+			age: 19,
+			gender: 'F',
+			skype: 'jdkfdj'
+		},
+		{
+			name: 'Yopioip',
+			lastname: 'Buicnvm',
+			age: 67,
+			gender: 'F',
+			skype: 'cxvcxv'
+		},
+		{
+			name: 'Uioopi',
+			lastname: 'Ejdkfjk',
+			age: 12,
+			gender: 'M',
+			skype: 'eriouwe'
+		}];
+
 		response.end(JSON.stringify(students));
 	} else {
 		filePath = '../..' + lookup,

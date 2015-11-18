@@ -1,42 +1,19 @@
 function Controller() {
 	'use strict';
-	var group = new Group([{
-			name: 'Rjkfg',
-			lastname: 'Qrekre',
-			age: 45,
-			gender: 'M',
-			skype: 'djkfj'
-		},
-		{
-			name: 'Were',
-			lastname: 'Tthjfhj',
-			age: 19,
-			gender: 'F',
-			skype: 'jdkfdj'
-		},
-		{
-			name: 'Yopioip',
-			lastname: 'Buicnvm',
-			age: 67,
-			gender: 'F',
-			skype: 'cxvcxv'
-		},
-		{
-			name: 'Uioopi',
-			lastname: 'Ejdkfjk',
-			age: 12,
-			gender: 'M',
-			skype: 'eriouwe'
-		}]),
-		$listViewEl = $('#list-view'),
+	var $listViewEl = $('#list-view'),
+		group,
 		listView;
 
 	mediator.subscribe('show preview', showPreview);
 	mediator.subscribe('show edit-view', showEditView);
 	mediator.subscribe('show group', showListView);
 
-	listView = new ListView({el: $listViewEl, model: group});
+	helper.sendAjaxRequest('GET', '/students', createGroup);
 
+	function createGroup (groupJSON) {
+		group = new Group(JSON.parse(groupJSON));
+		listView = new ListView({el: $listViewEl, model: group});
+	}
 	function hideListView() {
 		$listViewEl.hide();
 	}
