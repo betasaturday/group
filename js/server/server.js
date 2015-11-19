@@ -8,6 +8,7 @@ var http = require('http'),
 	};
 
 http.createServer(function (request, response) {
+	//console.log('Server started');
 	var lookup = decodeURI(request.url) === '/' ? '/index.html' : decodeURI(request.url),
 		filePath,
 		headers;
@@ -52,7 +53,7 @@ http.createServer(function (request, response) {
 		filePath = '../..' + lookup,
 		headers;
 
-		console.log(filePath);
+		console.log(lookup);
 
 		fs.exists(filePath, function (exists) {
 			if (exists) {
@@ -75,3 +76,4 @@ http.createServer(function (request, response) {
 
 }).listen(3000);
 
+console.log('Server started');
