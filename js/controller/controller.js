@@ -6,11 +6,15 @@ function Controller() {
 	mediator.subscribe('show edit-view', showEditView);
 	mediator.subscribe('show group', showListView);
 
-	helper.sendAjaxRequest('GET', '/students', createGroup);
+	//helper.sendAjaxRequest('GET', '/students', createGroup);
 
-	function createGroup (groupJSON) {
-		var group = new Group(JSON.parse(groupJSON)),
-			listView = new ListView({el: $listViewEl, model: group});
+	var group = new Group(),
+		groupFetch = group.fetch();
+
+	groupFetch.done(createListView);
+
+	function createListView () {
+		var	listView = new ListView({el: $listViewEl, collection: group});
 	}
 
 	function hideListView() {

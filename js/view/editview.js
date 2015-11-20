@@ -24,9 +24,9 @@ var EditView = Backbone.View.extend({
 	save: function () {
 		var newPersonJSON = {};
 		this.inputs.forEach(function ($input) {
-			newPersonJSON[$input.attr('name')] = $input.val();
+			newPersonJSON[$input.attr('name')] = (isNaN($input.val()) ? $input.val() : Number($input.val()));
 		});
-		this.model.set(newPersonJSON);
+		this.model.save(newPersonJSON);
 		this.backToList();
 	},
 

@@ -6,7 +6,7 @@ var ListView = Backbone.View.extend({
 	},
 
 	render: function () {
-		this.model.forEach(function (person) {
+		this.collection.forEach(function (person) {
 			var personView = new PersonView({model: person});
 			this.$el.append(personView.render().$el);
 		}, this);
